@@ -1,5 +1,7 @@
 import { isObject, extend } from "@vue/shared";
 import { reactive, readonly } from "./reactivity";
+import { TrackOpType } from "./operations";
+import { Track } from "./effect";
 
 // 定义每个api用的代理配置，用于数据劫持具体操作（get()、set()方法）
 // 四个代理配置也是都用到get()、set()操作，因此又可以用柯里化高阶函数处理
@@ -12,8 +14,8 @@ function createGetter(isReadonly = false, shallow = false) {
 
     // 判断
     if (!isReadonly) {
-      // 不是只读
-      // TODO：收集依赖
+      // 不是只读则收集依赖（三个参数为代理的变量/对象，对该变量做的操作（增删改等），操作对应的属性）
+      Track(target, TrackOpType.GET, key);
     }
     if (shallow) {
       // 如果只是浅层处理，直接返回浅层代理处理即可
@@ -33,6 +35,7 @@ const shallowGet = createGetter(false, true); // 不是只读，是浅代理
 const readonlyGet = createGetter(true, true); // 只读，深度
 const shallowReadonlyGet = createGetter(true, true); // 只读，浅层
 
+// 代理-获取set()配置
 // 代理-获取set()配置
 function createSetter(shallow = false) {
   return function set(target, key, value, receiver) {

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2.effect</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="../reactivity/dist/reactivity.global.js"></script>
+
+    <!-- 跑官方源码的例子 -->
+    <!-- <script>
+      let { reactive, effect } = Vue;
+      let state = reactive({ name: "张三", age: 20 });
+      // effect方法相当于Vue2.0中的watch方法，第一个参数传入函数，默认执行（如果传入了{laze: true}则不是）
+      // 观察者模式
+      // 默认执行过程：effect是一个依赖收集器，如果执行的函数中用到的数据已经被代理过了，则会去执行get()方法收集effect依赖
+      effect(
+        () => {
+          app.innerHTML = state.name + state.age;
+        },
+        { laze: true }
+      );
+
+      // 1s后修改被代理的数据，导致触发set方法，执行effect
+      setTimeout(() => {
+        state.name = "lis";
+      }, 1000);
+    </script> -->
+
+    <!-- <script>
+      let { reactive, effect } = VueReactivity;
+      let state = reactive({ name: "张三", age: 20 });
+      // effect方法相当于Vue2.0中的watch方法，第一个参数传入函数，默认执行（如果传入了{laze: true}则不是）
+      // 观察者模式
+      // 默认执行过程：effect是一个依赖收集器，如果执行的函数中用到的数据已经被代理过了，则会去执行get()方法收集effect依赖
+      effect(() => {
+        app.innerHTML = state.name + state.age;
+      });
+    </script> -->
+
+    <script>
+      let { reactive, effect } = VueReactivity;
+      let state = reactive({ name: "张三", age: 20, sex: "男" });
+      // effect方法相当于Vue2.0中的watch方法，第一个参数传入函数，默认执行（如果传入了{laze: true}则不是）
+      // 观察者模式
+      // 默认执行过程：effect是一个依赖收集器，如果执行的函数中用到的数据已经被代理过了，则会去执行get()方法收集effect依赖
+      effect(() => {
+        state.name;
+        effect(() => {
+          state.age;
+        });
+        state.sex;
+      });
+    </script>
+  </body>
+</html>

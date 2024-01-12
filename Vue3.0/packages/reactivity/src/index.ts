@@ -6,3 +6,5 @@ export {
   readonly,
   shallowReadonly,
 } from "./reactivity";
+
+export { effect } from "./effect";
