@@ -1,7 +1,14 @@
-import { isObject, extend } from "@vue/shared";
+import {
+  isObject,
+  isArray,
+  isIntegerKey,
+  extend,
+  hasOwn,
+  hasChange,
+} from "@vue/shared";
 import { reactive, readonly } from "./reactivity";
-import { TrackOpType } from "./operations";
-import { Track } from "./effect";
+import { TrackOpType, TriggerOpType } from "./operations";
+import { Track, trigger } from "./effect";
 
 // 定义每个api用的代理配置，用于数据劫持具体操作（get()、set()方法）
 // 四个代理配置也是都用到get()、set()操作，因此又可以用柯里化高阶函数处理
@@ -36,12 +43,29 @@ const readonlyGet = createGetter(true, true); // 只读，深度
 const shallowReadonlyGet = createGetter(true, true); // 只读，浅层
 
 // 代理-获取set()配置
-// 代理-获取set()配置
 function createSetter(shallow = false) {
   return function set(target, key, value, receiver) {
-    const res = Reflect.set(target, key, value, receiver); // 获取最新的值，相当于target[key] = value
+    // （1）获取老值
+    const oldValue = target[key];
 
-    // TODO：触发更新
+    // (2)判断target是数组还是对象，此时target已经是被代理过的对象了，所以要另写方法判断
+    // 如果是数组，key的位置小于target.length，说明是修改值；如果是对象，则直接用hasOwn方法判断
+    let hasKey = ((isArray(target) && isIntegerKey(key)) as unknown as boolean)
+      ? Number(key) < target.length
+      : hasOwn(target, key);
+
+    // （3）设置新值
+    const res = Reflect.set(target, key, value, receiver); // 获取最新的值，相当于target[key] = value，返回的res是布尔值，设置新值成功之后返回true
+
+    // （4）触发更新
+    if (!hasKey) {
+      // 此时说明是新增
+      trigger(target, TriggerOpType.ADD, key, value);
+    } else if (hasChange(value, oldValue)) {
+      // 修改的时候，要去判断新值和旧值是否相同
+      trigger(target, TriggerOpType.SET, key, value, oldValue);
+    }
+
     return res;
   };
 }
