@@ -16,7 +16,7 @@ function createReactEffect(fn, options) {
         // 入栈
         effectStack.push(effect);
         activeEffect = effect;
-        fn(); // 执行用户的方法
+        return fn(); // 执行用户的方法
       } finally {
         // 不管如何都会执行里面的方法
         // 出栈，将当前的effect改为栈顶
@@ -119,5 +119,11 @@ export function trigger(target, type, key?, newValue?, oldValue?) {
     }
   }
 
-  effectSet.forEach((effect: any) => effect());
+  effectSet.forEach((effect: any) => {
+    if (effect.options.sch) {
+      effect.options.sch(effect); // 用于实现computed计算属性的特性3，触发更新时使得this._dirty = true，以便执行computed里面的方法
+    } else {
+      effect();
+    }
+  });
 }
