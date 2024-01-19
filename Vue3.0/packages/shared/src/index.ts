@@ -32,3 +32,5 @@ export const isIntegerKey = (key) => {
 
 // 判断值是否更新
 export const hasChange = (value, oldValue) => value !== oldValue;
+
+export * from "./shapeFlags";

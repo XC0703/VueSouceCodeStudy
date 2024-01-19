@@ -1,3 +1,1 @@
-let a = 1;
-
-export { a };
+export { createRender } from "./render";

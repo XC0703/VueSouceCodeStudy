@@ -62,10 +62,37 @@
       };
     </script> -->
 
-    <div id="id"></div>
+    <!-- <div id="id"></div>
     <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
     <script>
       console.log(VueRuntimeDom);
+    </script> -->
+
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp } = VueRuntimeDom;
+      console.log(createApp);
+
+      let App = {
+        render() {
+          console.log(100);
+        },
+      };
+      createApp(App, { name: "张三", age: 10 }).mount("#app");
+    </script> -->
+
+    <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp } = VueRuntimeDom;
+
+      let App = {
+        render() {
+          console.log(100);
+        },
+      };
+      createApp(App, { name: "张三", age: 10 }).mount("#app");
     </script>
   </body>
 </html>
