@@ -12,11 +12,12 @@ export const createVNode = (type, props, children = null) => {
     : 0;
   const vnode = {
     _v_isVNode: true, //表示是一个虚拟dom
-    type,
+    type, // createVNode时传入的是rootComponent，本质是一个对象，组件的所有属性都在这里，比如setup方法
     props,
     children,
     key: props && props.key, // 后面的diff算法会用到
     el: null, // 虚拟dom对应的真实dom
+    component: {}, // 组件的实例对象
     shapeFlag,
   };
 

@@ -82,7 +82,7 @@
       createApp(App, { name: "张三", age: 10 }).mount("#app");
     </script> -->
 
-    <div id="app">111111111111</div>
+    <!-- <div id="app">111111111111</div>
     <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
     <script>
       let { createApp } = VueRuntimeDom;
@@ -90,6 +90,79 @@
       let App = {
         render() {
           console.log(100);
+        },
+      };
+      createApp(App, { name: "张三", age: 10 }).mount("#app");
+    </script> -->
+
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp } = VueRuntimeDom;
+
+      let App = {
+        setup(props, context) {
+          console.log("setup函数执行了！！！");
+        },
+      };
+      createApp(App, { name: "张三", age: 10 }).mount("#app");
+    </script> -->
+
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp } = VueRuntimeDom;
+
+      let App = {
+        setup(props, context) {
+          console.log("setup函数执行了！！！");
+          console.log(props, context);
+        },
+      };
+      createApp(App, { name: "张三", age: 10 }).mount("#app");
+    </script> -->
+
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp } = VueRuntimeDom;
+
+      let App = {
+        setup(props, context) {
+          // console.log("setup函数执行了！！！");
+          // console.log(props, context);
+          return ()=>{
+
+          }
+        },
+
+        render(proxy) {
+          // Vue3组件的渲染函数，其实proxy参数将上面定义的所有属性合并了，等效于在setup入口函数里面返回一个函数（和上面等效，上面还不用用proxy.来获取属性）
+          console.log(proxy);
+          // console.log(proxy.props.name);
+          console.log(proxy.name);
+        },
+      };
+      createApp(App, { name: "张三", age: 10 }).mount("#app");
+    </script> -->
+
+    <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp } = VueRuntimeDom;
+
+      let App = {
+        setup(props, context) {
+          // return () => {
+          //   console.log("这是setup方法返回的render函数！！！");
+          // };
+          return {
+            props,
+          };
+        },
+
+        render(proxy) {
+          console.log("这是组件本身自己定义的render函数！！！");
         },
       };
       createApp(App, { name: "张三", age: 10 }).mount("#app");
