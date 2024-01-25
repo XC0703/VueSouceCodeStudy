@@ -38,3 +38,17 @@ function normalizeChildren(vnode, children) {
   }
   vnode.shapeFlag = vnode.shapeFlag | type; // 可能标识会受儿子影响
 }
+
+export function isVnode(vnode) {
+  return vnode._v_isVNode;
+}
+
+// 元素的chldren变成vnode
+export const TEXT = Symbol("text");
+export function CVnode(child) {
+  if (isObject(child)) {
+    return child;
+  } else {
+    return createVNode(TEXT, null, String(child));
+  }
+}

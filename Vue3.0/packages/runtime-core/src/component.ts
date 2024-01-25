@@ -95,8 +95,5 @@ function finishComponentSetup(instance) {
     }
     instance.render = Component.render;
   }
-  console.log(instance.render);
+  // console.log(instance.render);
 }
-
-// 创建组件的effect依赖函数
-export const setupRenderEffect = () => {};

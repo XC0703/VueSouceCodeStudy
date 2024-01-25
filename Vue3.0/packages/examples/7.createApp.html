@@ -146,7 +146,7 @@
       createApp(App, { name: "张三", age: 10 }).mount("#app");
     </script> -->
 
-    <div id="app">111111111111</div>
+    <!-- <div id="app">111111111111</div>
     <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
     <script>
       let { createApp } = VueRuntimeDom;
@@ -163,6 +163,50 @@
 
         render(proxy) {
           console.log("这是组件本身自己定义的render函数！！！");
+        },
+      };
+      createApp(App, { name: "张三", age: 10 }).mount("#app");
+    </script> -->
+
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp } = VueRuntimeDom;
+
+      let App = {
+        render(proxy) {
+          console.log("这是组件本身自己定义的render函数！！！");
+          console.log(this,proxy); // this值被指向了proxy
+        },
+      };
+      createApp(App, { name: "张三", age: 10 }).mount("#app");
+    </script> -->
+
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp, h } = VueRuntimeDom;
+
+      let App = {
+        render(proxy) {
+          return h("div", { style: { color: "red" } }, "hello");
+        },
+      };
+      createApp(App, { name: "张三", age: 10 }).mount("#app");
+    </script> -->
+
+    <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp, h } = VueRuntimeDom;
+
+      let App = {
+        render(proxy) {
+          return h(
+            "div",
+            { style: { color: "red" } },
+            h("div", {}, ["张三", h("p", {}, "李四")])
+          );
         },
       };
       createApp(App, { name: "张三", age: 10 }).mount("#app");
