@@ -16,7 +16,7 @@ export const createVNode = (type, props, children = null) => {
     props,
     children,
     key: props && props.key, // 后面的diff算法会用到
-    el: null, // 虚拟dom对应的真实dom
+    el: null, // 虚拟dom对应的真实dom，方便更新时卸载
     component: {}, // 组件的实例对象
     shapeFlag,
   };

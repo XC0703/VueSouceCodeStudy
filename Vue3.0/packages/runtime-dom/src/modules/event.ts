@@ -11,7 +11,7 @@ export const patchEvent = (el, key, value) => {
     exists.value = value;
   } else {
     // 如果该触发方式还未绑定事件或者传入的函数为空，可能是新的绑定，也可能是清除事件
-    const eventName = key.slice(2).toLowCase();
+    const eventName = key.slice(2).toLowerCase();
     if (value) {
       //  新的事件绑定，且将该绑定放入缓存器（情况2）
       let invoker = (invokers[eventName] = createInvoker(value)); // 返回一个包装后的函数
