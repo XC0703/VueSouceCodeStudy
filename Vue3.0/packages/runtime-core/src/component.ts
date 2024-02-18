@@ -1,6 +1,16 @@
 import { isFunction, isObject, ShapeFlags } from "@vue/shared";
 import { componentPublicInstance } from "./componentPublicInstance";
 
+// 获取到当前组件实例
+export const getCurrentInstance = () => {
+  return currentInstance;
+};
+
+// 设置当前组件实例
+export const setCurrentInstance = (target) => {
+  currentInstance = target;
+};
+
 // 创建组件实例
 export const createComponentInstance = (vnode) => {
   // instance本质是一个对象(包含组件的vnode，前面实现的组件的一些属性如参数props、自定义属性attrs，setup入口函数的状态等)
@@ -37,7 +47,8 @@ export const setupComponet = (instance) => {
     // 如果无状态，说明是简单组件，直接渲染即可。
   }
 };
-
+// 将全局的组件实例暴露出去
+export let currentInstance;
 // 处理有状态的组件
 function setupStateComponent(instance) {
   // 1、setup方法的返回值是我们的render函数的参数
@@ -50,8 +61,13 @@ function setupStateComponent(instance) {
   //  setup();
   //  2、处理参数
   if (setup) {
+    // setup执行之前，要创建全局的currentInstance
+    currentInstance = instance;
     const setupContext = createContext(instance); // 返回一个上下文对象
     const setupResult = setup(instance.props, setupContext); // 实际执行的setup函数（实参）
+
+    // setup执行完毕，currentInstance要赋空null
+    currentInstance = null;
     // setup返回值有两种情况：1、对象；2、函数==>根据不同情况进行处理
     handlerSetupResult(instance, setupResult); // 如果是对象，则将值放在instance.setupState；如果是函数，则就是render函数
   } else {

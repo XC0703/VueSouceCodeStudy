@@ -3,6 +3,7 @@ import { effect } from "@vue/reactivity";
 import { apiCreateApp } from "./apiCreateApp";
 import { createComponentInstance, setupComponet } from "./component";
 import { CVnode, TEXT } from "./vnode";
+import { invokeArrayFns } from "./apilifecycle";
 
 // 实现渲染Vue3组件==>vnode==>render
 export function createRender(renderOptionDom) {
@@ -24,6 +25,12 @@ export function createRender(renderOptionDom) {
     effect(function componentEffect() {
       // 判断是否是初次渲染
       if (!instance.isMounted) {
+        // 渲染之前的阶段
+        let { bm, m } = instance;
+        if (bm) {
+          invokeArrayFns(bm);
+        }
+
         // 获取到render返回值
         const proxy = instance.proxy; // 已经代理了组件，可以访问到组件的所有属性和所有方法
         // console.log("这是组件实例proxy：");
@@ -32,8 +39,17 @@ export function createRender(renderOptionDom) {
         // console.log("h函数生成的vnode树：", subTree);
         instance.subTree = subTree; // 记得在实例上挂载vnode，方便后面更新时使用
         patch(null, subTree, container); // 渲染vnode（此时是元素的vnode）
+
+        // 渲染完成的阶段
+        if (m) {
+          invokeArrayFns(m);
+        }
         instance.isMounted = true;
       } else {
+        let { bu, u } = instance;
+        if (bu) {
+          invokeArrayFns(bu);
+        }
         // console.log("更新");
         // 对比新旧vnode--diff算法
         let proxy = instance.proxy;
@@ -41,6 +57,9 @@ export function createRender(renderOptionDom) {
         const nextVnode = instance.render.call(proxy, proxy); // 新vnode
         instance.subTree = nextVnode;
         patch(prevVnode, nextVnode, container); // 此时在patch方法中会对比新旧vnode，然后更新
+        if (u) {
+          invokeArrayFns(u);
+        }
       }
     });
   };
