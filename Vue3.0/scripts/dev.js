@@ -15,5 +15,9 @@ async function build(target) {
   );
 }
 
-// 此时仅仅以热更新reactivity包为例子，后面会补充完善
+// 热更新
 build("runtime-core");
+// build("runtime-dom");
+// build("reactivity");
+// build("compiler-core");
+// build("shared");

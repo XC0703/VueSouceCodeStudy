@@ -5,7 +5,12 @@ import { execa } from "execa";
 // （1）获取打包目录
 // 注意：文件夹才进行打包，因此写一个filter方法进行过滤
 const dirs = fs.readdirSync("packages").filter((p) => {
-  return fs.statSync(`packages/${p}`).isDirectory();
+  const fullPath = `packages/${p}`;
+  // 排除特定目录
+  if (fullPath === "packages/examples") {
+    return false;
+  }
+  return fs.statSync(fullPath).isDirectory();
 });
 // console.log(dirs); // [ 'reactivity', 'shared' ]
 
