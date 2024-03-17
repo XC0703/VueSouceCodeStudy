@@ -43,3 +43,26 @@ export function makeMap(
     ? (val) => set.has(val.toLowerCase())
     : (val) => set.has(val);
 }
+
+// 判断字符串是否是 onXxxx，如onclick
+const onRE = /^on[^a-z]/;
+export const isOn = (key) => onRE.test(key);
+
+// 驼峰化
+export const capitalize = (str) => {
+  // e.g
+  // my-first-name
+  // myFirstName
+  // replace 第二个参数可以是一个函数
+  // 这个函数接收两个参数
+  //      match: 匹配到的子串
+  //      p1,p2,p3...: 假如 replace 第一个参数是正则表达式
+  //                   则代表第 n 个括号匹配到的字符串
+  // 如上例子中
+  // nerverUse 是 -f、-n
+  // c 是 f、n
+  return str.replace(/-(\w)/g, (neverUse, c) => (c ? c.toUpperCase() : ""));
+};
+
+// 这里是一个将 xxx-xx 转化为 onxxxXx 的工具函数
+export const toHandlerKey = (str) => (str ? `on${capitalize(str)}` : "");

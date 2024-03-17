@@ -17,12 +17,12 @@ export const createParserContext = (content) => {
 
 // 生成完整的AST
 export const baseParse = (content) => {
-  console.log("模板字符串", content);
+  // console.log("模板字符串", content);
   const context = createParserContext(content);
-  console.log("parse解析上下文", context);
+  // console.log("parse解析上下文", context);
   // 具体的解析逻辑
   const children = parseChildren(context);
-  console.log("最终输出的AST树", createRoot(children));
+  // console.log("最终输出的AST树", createRoot(children));
   return createRoot(children);
 };
 
@@ -45,23 +45,23 @@ const parseChildren = (context) => {
     // 以 < 开头则是元素
     if (s[0] === "<") {
       node = parseElement(context);
-      console.log("此时调用parseElement方法解析出来的元素节点", node);
-      console.log("此时字符串被解析后剩余的内容", context.source);
+      // console.log("此时调用parseElement方法解析出来的元素节点", node);
+      // console.log("此时字符串被解析后剩余的内容", context.source);
     }
     // 以 {{ 开头则是插值表达式
     else if (startsWith(s, "{{")) {
       node = parseInterpolation(context);
-      console.log(
-        "此时调用parseInterpolation方法解析出来的插值表达式节点",
-        node
-      );
-      console.log("此时字符串被解析后剩余的内容", context.source);
+      // console.log(
+      //   "此时调用parseInterpolation方法解析出来的插值表达式节点",
+      //   node
+      // );
+      // console.log("此时字符串被解析后剩余的内容", context.source);
     }
     // 否则就是文本节点
     else {
       node = parseText(context);
-      console.log("此时调用parseText方法解析出来的文本节点", node);
-      console.log("此时字符串被解析后剩余的内容", context.source);
+      // console.log("此时调用parseText方法解析出来的文本节点", node);
+      // console.log("此时字符串被解析后剩余的内容", context.source);
     }
 
     // 源码中写了个 pushNode 方法来控制，这里直接写出来了
@@ -107,17 +107,17 @@ const parseTag = (context) => {
 
   advanceBy(context, match[0].length);
   advanceSpaces(context);
-  console.log("此时解析出来的标签名", tag);
-  console.log("此时字符串被解析后剩余的内容", context.source);
+  // console.log("此时解析出来的标签名", tag);
+  // console.log("此时字符串被解析后剩余的内容", context.source);
 
   // 此时 context.source
   // class="a" v-bind:b="c">parse {{ element }}</div>
 
   // parseAttributes 下面再实现
   const { props, directives } = parseAttributes(context);
-  console.log("此时解析出来的属性", props);
-  console.log("此时解析出来的指令", directives);
-  console.log("此时字符串被解析后剩余的内容", context.source);
+  // console.log("此时解析出来的属性", props);
+  // console.log("此时解析出来的指令", directives);
+  // console.log("此时字符串被解析后剩余的内容", context.source);
 
   // 此时 context.source 会变成
   // >parse {{ element }}</div>
@@ -160,8 +160,8 @@ const parseAttributes = (context) => {
     // class="a" v-bind:b="c">parse {{ element }}</div>
     // parseAttributes 下面再实现
     const attr = parseAttribute(context);
-    console.log("此时解析出来的属性节点", attr);
-    console.log("此时字符串被解析后剩余的内容", context.source);
+    // console.log("此时解析出来的属性节点", attr);
+    // console.log("此时字符串被解析后剩余的内容", context.source);
     // 调用后
     // v-bind:b="c">parse {{ element }}</div>
 
