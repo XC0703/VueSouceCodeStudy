@@ -6,7 +6,7 @@ import {
 
 // 处理 v-bind 指令
 export const transformBind = (dir) => {
-  console.log("调用transformBind方法处理v-bind指令，进入的节点为", dir);
+  // console.log("调用transformBind方法处理v-bind指令，进入的节点为", dir);
   const { exp } = dir;
   const arg = dir.arg;
 
@@ -31,7 +31,7 @@ export const transformBind = (dir) => {
   const ret = {
     props: [createObjectProperty(arg, exp)],
   };
-  console.log("transformBind方法处理v-bind指令返回", ret);
+  // console.log("transformBind方法处理v-bind指令返回", ret);
 
   return ret;
 };

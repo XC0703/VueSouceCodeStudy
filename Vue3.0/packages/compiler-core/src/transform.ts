@@ -21,14 +21,14 @@ export function createTransformContext(
 
 // 转换节点
 export function transform(root, options) {
-  console.log("调用transform方法，开始转换AST");
+  // console.log("调用transform方法，开始转换AST");
   const context = createTransformContext(root, options);
-  console.log("调用createTransformContext方法生成上下文", context);
-  console.log("调用traverseNode方法遍历并转换节点");
+  // console.log("调用createTransformContext方法生成上下文", context);
+  // console.log("调用traverseNode方法遍历并转换节点");
   traverseNode(root, context);
-  console.log("调用createRootCodegen方法生成根节点的代码生成");
+  // console.log("调用createRootCodegen方法生成根节点的代码生成");
   createRootCodegen(root);
-  console.log("转换AST结束，返回根节点", root);
+  // console.log("转换AST结束，返回根节点", root);
 }
 
 // 遍历并转换节点
@@ -36,13 +36,13 @@ export function traverseNode(node, context) {
   context.currentNode = node;
   // 获取转换插件序列
   const { nodeTransforms } = context;
-  console.log("traverseNode中获取转换插件序列", nodeTransforms);
+  // console.log("traverseNode中获取转换插件序列", nodeTransforms);
   const exitFns = [];
   // 通过插件依次对当前节点进行处理
   for (let i = 0; i < nodeTransforms.length; i++) {
     // 获取退出函数并缓存
     const onExit = nodeTransforms[i](node, context);
-    console.log("通过插件依次对当前节点进行处理的退出函数结果onExit", onExit);
+    // console.log("通过插件依次对当前节点进行处理的退出函数结果onExit", onExit);
     if (onExit) {
       if (isArray(onExit)) {
         exitFns.push(...onExit);
@@ -56,14 +56,14 @@ export function traverseNode(node, context) {
       node = context.currentNode;
     }
   }
-  console.log("通过插件依次对当前节点进行处理的退出函数数组exitFns", exitFns);
+  // console.log("通过插件依次对当前节点进行处理的退出函数数组exitFns", exitFns);
   // 根据节点类型递归遍历子节点
-  console.log("根据节点类型递归遍历子节点");
-  console.log("当前节点", node);
+  // console.log("根据节点类型递归遍历子节点");
+  // console.log("当前节点", node);
   switch (node.type) {
     case NodeTypes.ELEMENT:
     case NodeTypes.ROOT:
-      console.log("调用traverseChildren方法递归遍历子节点");
+      // console.log("调用traverseChildren方法递归遍历子节点");
       traverseChildren(node, context);
       break;
 
@@ -106,7 +106,7 @@ export function createRootCodegen(root) {
       root.codegenNode = child;
     }
   }
-  console.log("生成根节点的 codegenNode", root.codegenNode);
+  // console.log("生成根节点的 codegenNode", root.codegenNode);
 
   // 源码中实现了多根节点的支持
   // else if (children.length > 1) {}

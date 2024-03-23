@@ -7,7 +7,7 @@ import {
 
 // 处理 v-on 指令
 export const transformOn = (dir) => {
-  console.log("调用transformOn方法处理v-on指令，进入的节点为", dir);
+  // console.log("调用transformOn方法处理v-on指令，进入的节点为", dir);
   const { arg } = dir;
 
   // 驼峰化
@@ -42,6 +42,6 @@ export const transformOn = (dir) => {
       ),
     ],
   };
-  console.log("transformOn方法处理v-on指令返回", ret);
+  // console.log("transformOn方法处理v-on指令返回", ret);
   return ret;
 };

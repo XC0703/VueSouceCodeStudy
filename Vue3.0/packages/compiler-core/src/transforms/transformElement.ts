@@ -35,20 +35,18 @@ export const transformElement = (node, context) => {
     let vnodeDirectives;
 
     // 处理 props
-    console.log("transformElement的第一步：处理 props");
-    if (props.length > 0) {
-      // 获取属性解析结果
-      console.log("调用buildProps方法处理属性");
-      const propsBuildResult = buildProps(node, context);
-      console.log("属性处理的结果", propsBuildResult);
-      vnodeProps = propsBuildResult.props;
-      patchFlag = propsBuildResult.patchFlag;
-      dynamicPropNames = propsBuildResult.dynamicPropNames;
-      vnodeDirectives = propsBuildResult.directives;
-    }
+    // console.log("transformElement的第一步：处理 props");
+    // 获取属性解析结果
+    // console.log("调用buildProps方法处理属性");
+    const propsBuildResult = buildProps(node, context);
+    // console.log("属性处理的结果", propsBuildResult);
+    vnodeProps = propsBuildResult.props;
+    patchFlag = propsBuildResult.patchFlag;
+    dynamicPropNames = propsBuildResult.dynamicPropNames;
+    vnodeDirectives = propsBuildResult.directives;
 
     // 处理 children
-    console.log("transformElement的第二步：处理 children");
+    // console.log("transformElement的第二步：处理 children");
     if (node.children.length > 0) {
       if (node.children.length === 1) {
         const child = node.children[0];
@@ -74,11 +72,11 @@ export const transformElement = (node, context) => {
         vnodeChildren = node.children;
       }
     }
-    console.log("处理 children的结果", vnodeChildren);
+    // console.log("处理 children的结果", vnodeChildren);
 
     // 处理 patchFlag
-    console.log("transformElement的第三步：处理 patchFlag");
-    console.log("patchFlag的值", patchFlag);
+    // console.log("transformElement的第三步：处理 patchFlag");
+    // console.log("patchFlag的值", patchFlag);
     if (patchFlag !== 0) {
       // patchFlag 为负数则说明不存在复合情况
       if (patchFlag < 0) {
@@ -101,13 +99,13 @@ export const transformElement = (node, context) => {
         // 将上面的内容注释在 patchFlag 后面作为一个参考
         vnodePatchFlag = patchFlag + ` /* ${flagNames} */`;
       }
-      console.log("处理patchFlag的结果", vnodePatchFlag);
+      // console.log("处理patchFlag的结果", vnodePatchFlag);
 
       // 处理动态属性名
       if (dynamicPropNames && dynamicPropNames.length) {
         vnodeDynamicProps = stringifyDynamicPropNames(dynamicPropNames);
       }
-      console.log("处理动态属性名的结果", vnodeDynamicProps);
+      // console.log("处理动态属性名的结果", vnodeDynamicProps);
     }
 
     node.codegenNode = createVNodeCall(
@@ -190,8 +188,8 @@ const buildProps = (
   };
 
   // 遍历所有属性并进行处理
-  console.log("buildProps的第一步：开始遍历属性");
-  console.log("props", props);
+  // console.log("buildProps的第一步：开始遍历属性");
+  // console.log("props", props);
   for (let i = 0; i < props.length; i++) {
     const prop = props[i];
     // 处理静态属性static attribute
@@ -257,12 +255,12 @@ const buildProps = (
       }
     }
   }
-  console.log("属性遍历后的属性数组properties:", properties);
-  console.log("属性遍历后的参数数组mergeArgs:", mergeArgs);
-  console.log("属性遍历后的运行时指令数组runtimeDirectives", runtimeDirectives);
+  // console.log("属性遍历后的属性数组properties:", properties);
+  // console.log("属性遍历后的参数数组mergeArgs:", mergeArgs);
+  // console.log("属性遍历后的运行时指令数组runtimeDirectives", runtimeDirectives);
 
   // 合并参数
-  console.log("buildProps的第二步：合并参数");
+  // console.log("buildProps的第二步：合并参数");
   let propsExpression = undefined; // propsExpression 是一个表达式，它代表了组件的属性（props）的最终形式。
   // 如果有 v-bind
   if (mergeArgs.length) {
@@ -280,11 +278,11 @@ const buildProps = (
   } else if (properties.length) {
     propsExpression = createObjectExpression(properties);
   }
-  console.log("合并参数后的mergeArgs:", mergeArgs);
-  console.log("合并参数后的propsExpression:", propsExpression);
+  // console.log("合并参数后的mergeArgs:", mergeArgs);
+  // console.log("合并参数后的propsExpression:", propsExpression);
 
   // 分析 patchFlag
-  console.log("buildProps的第三步：分析patchFlag");
+  // console.log("buildProps的第三步：分析patchFlag");
   if (hasDynamicKeys) {
     patchFlag |= PatchFlags.FULL_PROPS;
   } else {
@@ -308,10 +306,10 @@ const buildProps = (
   ) {
     patchFlag |= PatchFlags.NEED_PATCH;
   }
-  console.log("分析patchFlag后的patchFlag:", patchFlag);
+  // console.log("分析patchFlag后的patchFlag:", patchFlag);
 
   // 规范化 props
-  console.log("buildProps的第四步：规范化props");
+  // console.log("buildProps的第四步：规范化props");
   if (propsExpression) {
     switch (propsExpression.type) {
       // 说明 props 中没有 v-bind，只需要处理动态的属性绑定
@@ -377,10 +375,10 @@ const buildProps = (
         break;
     }
   }
-  console.log("规范化props后的propsExpression:", propsExpression);
+  // console.log("规范化props后的propsExpression:", propsExpression);
 
   // 返回结果
-  console.log("buildProps的第五步：返回结果");
+  // console.log("buildProps的第五步：返回结果");
   return {
     props: propsExpression,
     directives: runtimeDirectives,

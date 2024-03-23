@@ -6,7 +6,7 @@ export const transformText = (node) => {
   // 只有元素节点和根节点需要处理
   if (node.type === NodeTypes.ROOT || node.type === NodeTypes.ELEMENT) {
     return function postTransformText() {
-      console.log("调用transformText方法处理组合表达式，当前节点为", node);
+      // console.log("调用transformText方法处理组合表达式，当前节点为", node);
       const children = node.children;
       let currentContainer = undefined;
       let hasText = false;
@@ -41,7 +41,7 @@ export const transformText = (node) => {
           }
         }
       }
-      console.log("处理组合表达式后的结果currentContainer", currentContainer);
+      // console.log("处理组合表达式后的结果currentContainer", currentContainer);
     };
   }
 };

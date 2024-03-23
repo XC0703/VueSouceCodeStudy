@@ -5,6 +5,7 @@ import { createComponentInstance, setupComponet } from "./component";
 import { CVnode, TEXT } from "./vnode";
 import { invokeArrayFns } from "./apilifecycle";
 
+let curVnode = null; // 当前的vnode
 // 实现渲染Vue3组件==>vnode==>render
 export function createRender(renderOptionDom) {
   // 获取所有的dom操作
@@ -34,12 +35,10 @@ export function createRender(renderOptionDom) {
         // 获取到render返回值
         const proxy = instance.proxy; // 已经代理了组件，可以访问到组件的所有属性和所有方法
         // console.log("这是组件实例proxy：");
-        // console.log(proxy);
         const subTree = instance.render.call(proxy, proxy); // render函数执行，即调用render函数，第一个参数表示render函数的this指向组件实例proxy，第二个参数表示执行render函数的参数也是proxy
-        // console.log("h函数生成的vnode树：", subTree);
         instance.subTree = subTree; // 记得在实例上挂载vnode，方便后面更新时使用
+        curVnode = subTree; // 记得在全局挂载vnode，方便后面更新时使用
         patch(null, subTree, container); // 渲染vnode（此时是元素的vnode）
-
         // 渲染完成的阶段
         if (m) {
           invokeArrayFns(m);
@@ -68,10 +67,8 @@ export function createRender(renderOptionDom) {
   // 组件的创建方法（分为初次渲染和更新两种情况）
   const processComponent = (n1, n2, container) => {
     if (n1 === null) {
-      // 组件第一次加载
+      // 组件第一次加载---负责初次渲染以及实现Effect依赖收集
       mountComponent(n2, container);
-    } else {
-      // 更新
     }
   };
   // 组件渲染的真正方法（实现由虚拟dom变成真实dom），步骤（核心）：
@@ -103,7 +100,13 @@ export function createRender(renderOptionDom) {
     // 1、对比属性
     let el = (n2.el = n1.el); // 获取真实dom
     patchProps(el, oldProps, newProps);
-    // 2、对比子节点
+    // 2、对比子节点--与初次挂载一样，需要将可能的字符串也要转换成vnode
+    n1.children = n1.children.map((item) => {
+      return CVnode(item);
+    });
+    n2.children = n2.children.map((item) => {
+      return CVnode(item);
+    });
     patchChildren(n1, n2, el);
   };
   // 对比属性有三种情况：
@@ -385,19 +388,23 @@ export function createRender(renderOptionDom) {
     for (let i = 0; i < children.length; i++) {
       // children[i]两种情况：1、['张三']这种元素，字符串的形式；2、h('div',{},'张三')这种元素，对象的形式（vnode）
       // 但两种情况都需要转换成vnode来处理，方便借助patch函数来渲染
-      const child = CVnode(children[i]); // 第一种情况转换成vnode
+      const child = (children[i] = CVnode(children[i])); // 第一种情况转换成vnode，记得将children[i]重新赋值
       // 递归渲染子节点（vnode包含了元素、组件、文本三种情况）
       patch(null, child, container);
     }
   };
 
   /** ---------------处理文本--------------- */
-  const processTxt = (n1, n2, container) => {
+  const processText = (n1, n2, container) => {
     if (n1 === null) {
       // 创建文本==>直接渲染到页面中（变成真实dom==>插入）
-      hostInsert(hostCreateText(n2.children), container);
+      hostInsert((n2.el = hostCreateText(n2.children)), container);
     } else {
-      // 更新
+      // 更新文本
+      if (n2.children !== n1.children) {
+        const el = (n2.el = n1.el!); // el是上面初次创建的真实文本节点
+        hostSetText(el, n2.children as string);
+      }
     }
   };
 
@@ -415,7 +422,6 @@ export function createRender(renderOptionDom) {
   const patch = (n1, n2, container, anchor = null) => {
     // diff算法
     // 1、判断是不是同一个元素
-    // console.log("n1:", n1, "n2:", n2);
     if (n1 && n2 && !isSameVnode(n1, n2)) {
       // 卸载老的元素
       unmount(n1);
@@ -428,7 +434,7 @@ export function createRender(renderOptionDom) {
     switch (type) {
       case TEXT:
         // 处理文本
-        processTxt(n1, n2, container);
+        processText(n1, n2, container);
         break;
       default:
         // 等效于shapeFlag && shapeFlag === ShapeFlags.ELEMENT

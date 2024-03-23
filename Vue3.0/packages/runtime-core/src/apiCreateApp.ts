@@ -10,10 +10,11 @@ export function apiCreateApp(render) {
       _props: rootProps,
       _container: null,
       mount(container) {
-        // 挂载的位置
-        // console.log(renderOptionDom, rootComponent, rootProps, container);
+        // console.log(rootComponent, rootProps, container);
         // 1、创建虚拟dom vnode
         let vnode = createVNode(rootComponent, rootProps);
+        // 第二件事：挂载模版到vnode上（container.innerHTML被清空之前，已先把模版字符串挂载到container上）
+        vnode.type.template = container.template;
         // console.log(vnode);
         // 2、将虚拟dom渲染到实际的位置
         render(vnode, container);

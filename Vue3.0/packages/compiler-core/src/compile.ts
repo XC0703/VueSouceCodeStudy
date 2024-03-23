@@ -5,6 +5,7 @@ import { transformElement } from "./transforms/transformElement";
 import { transformText } from "./transforms/transformText";
 import { transformOn } from "./transforms/vOn";
 import { transformBind } from "./transforms/vBind";
+import { generate } from "./codegen";
 
 export const getBaseTransformPreset: () => [any[], {}] = () => {
   // 插件预设
@@ -34,6 +35,6 @@ export const baseCompile = (template, options: any = {}) => {
       ),
     })
   );
-
   // 第三步：将AST转换成渲染函数，最终得到一个render渲染函数
+  return generate(ast);
 };

@@ -1,5 +1,7 @@
-import { isFunction, isObject, ShapeFlags } from "@vue/shared";
+import { baseCompile } from "@vue/compiler-core";
+import { extend, isFunction, isObject, ShapeFlags } from "@vue/shared";
 import { componentPublicInstance } from "./componentPublicInstance";
+import { h } from "./h";
 
 // 获取到当前组件实例
 export const getCurrentInstance = () => {
@@ -102,14 +104,31 @@ function handlerSetupResult(instance, setupResult) {
 
 // 处理render（把render挂载到实例上去）
 function finishComponentSetup(instance) {
-  // 判断组件中有没有render方法，没有则
+  // 判断组件中有没有render方法，没有则需要编译模版
   const Component = instance.type; // createVNode时传入给type的是rootComponent，本质是一个对象，组件的所有属性都在这里，比如setup方法，比如render方法
   if (!instance.render) {
     // 这里的render指的是上面instance实例的render属性，在handlerSetupResult函数中会赋值（赋值的情况：组件有setup且返回函数），如果没有setup则此时会为false，则需要赋组件的render方法
     if (!Component.render && Component.template) {
-      // TODO：模版编译
+      // 模版编译
+      let { template } = Component;
+      if (template[0] === "#") {
+        const el = document.querySelector(template);
+        template = el ? el.innerHTML : "";
+      }
+
+      const { code } = baseCompile(template);
+      // console.log("这是编译后的代码", code);
+      const fn = new Function("ctx", code);
+      const ctx = extend(
+        { h: h },
+        instance.attrs,
+        instance.props,
+        instance.setupState
+      );
+      const render = fn(ctx); // 将字符串里面的h函数、渲染的值以及函数都变成需要的值，而不是字符串
+      Component.render = render;
     }
     instance.render = Component.render;
   }
-  // console.log(instance.render);
+  // console.log("instance.render", instance.render);
 }
