@@ -1,0 +1,14 @@
+{
+  "name": "@vue/shared",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "license": "MIT",
+  "buildOptions": {
+    "name": "VueShared",
+    "formats": [
+      "esm-bundler",
+      "cjs"
+    ]
+  }
+}

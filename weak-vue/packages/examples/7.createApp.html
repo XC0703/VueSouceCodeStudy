@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>7.createApp.html</title>
+  </head>
+  <body>
+    <!-- <div id="app"></div>
+    <script src="../../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp, reactive, h } = VueRuntimeDOM; // createApp和h这两个函数都是Vue3.0中runtime-dom模块的方法，用于处理组件渲染（创建组件、渲染dom）
+
+      //  创建组件（composition组合式api）
+      let App = {
+        // data和methods是Vue2.0选项式api的写法，Vue3.0虽然兼容但是不建议在Vue3中这样写
+        // data() {
+        //   return {
+        //     a: 1,
+        //   };
+        // },
+        // methods: {
+        //   xx: () => {},
+        // },
+
+        // Vue3组件的入口函数，默认执行一次，相当于vue2中的beforeCreate、created，可以返回代理的一些响应式属性以供渲染函数使用，也可以直接返回渲染函数
+        setup(props, context) {
+          // 参数、上下文对象（包含了父组件传递下来的非 prop 属性attrs、可以用来触发父组件中绑定的事件函数emit、一个指向当前组件实例的引用root、用来获取插槽内容的函数slot等）
+          console.log();
+          let state = reactive({ age: 2 });
+          const fn = () => {
+            state.age++;
+          };
+
+          // 返回代理的响应式属性以供渲染函数使用
+          return {
+            state,
+          };
+
+          // 直接返回渲染函数
+          return () => {
+            console.log(state);
+            return h(
+              // h是渲染函数
+              "div",
+              { style: { color: "red" }, onClick: fn },
+              `hello ${state.age}`
+            );
+          };
+        },
+
+        // Vue3组件的渲染函数，其实proxy参数将上面定义的所有属性合并了，等效于在setup入口函数里面返回一个函数（和上面等效，上面还不用用proxy.来获取属性）
+        render(proxy) {
+          console(proxy.state.age);
+          return h(
+            "div",
+            { style: { color: "red" }, onClick: fn },
+            `hello ${proxy.state.age}`
+          );
+        },
+      };
+    </script> -->
+
+    <!-- <div id="id"></div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      console.log(VueRuntimeDom);
+    </script> -->
+
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp } = VueRuntimeDom;
+      console.log(createApp);
+
+      let App = {
+        render() {
+          console.log(100);
+        },
+      };
+      createApp(App, { name: "张三", age: 10 }).mount("#app");
+    </script> -->
+
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp } = VueRuntimeDom;
+
+      let App = {
+        render() {
+          console.log(100);
+        },
+      };
+      createApp(App, { name: "张三", age: 10 }).mount("#app");
+    </script> -->
+
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp } = VueRuntimeDom;
+
+      let App = {
+        setup(props, context) {
+          console.log("setup函数执行了！！！");
+        },
+      };
+      createApp(App, { name: "张三", age: 10 }).mount("#app");
+    </script> -->
+
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp } = VueRuntimeDom;
+
+      let App = {
+        setup(props, context) {
+          console.log("setup函数执行了！！！");
+          console.log(props, context);
+        },
+      };
+      createApp(App, { name: "张三", age: 10 }).mount("#app");
+    </script> -->
+
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp } = VueRuntimeDom;
+
+      let App = {
+        setup(props, context) {
+          // console.log("setup函数执行了！！！");
+          // console.log(props, context);
+          return ()=>{
+
+          }
+        },
+
+        render(proxy) {
+          // Vue3组件的渲染函数，其实proxy参数将上面定义的所有属性合并了，等效于在setup入口函数里面返回一个函数（和上面等效，上面还不用用proxy.来获取属性）
+          console.log(proxy);
+          // console.log(proxy.props.name);
+          console.log(proxy.name);
+        },
+      };
+      createApp(App, { name: "张三", age: 10 }).mount("#app");
+    </script> -->
+
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp } = VueRuntimeDom;
+
+      let App = {
+        setup(props, context) {
+          // return () => {
+          //   console.log("这是setup方法返回的render函数！！！");
+          // };
+          return {
+            props,
+          };
+        },
+
+        render(proxy) {
+          console.log("这是组件本身自己定义的render函数！！！");
+        },
+      };
+      createApp(App, { name: "张三", age: 10 }).mount("#app");
+    </script> -->
+
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp } = VueRuntimeDom;
+
+      let App = {
+        render(proxy) {
+          console.log("这是组件本身自己定义的render函数！！！");
+          console.log(this,proxy); // this值被指向了proxy
+        },
+      };
+      createApp(App, { name: "张三", age: 10 }).mount("#app");
+    </script> -->
+
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp, h } = VueRuntimeDom;
+
+      let App = {
+        render(proxy) {
+          return h("div", { style: { color: "red" } }, "hello");
+        },
+      };
+      createApp(App, { name: "张三", age: 10 }).mount("#app");
+    </script> -->
+
+    <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp, h } = VueRuntimeDom;
+
+      let App = {
+        render(proxy) {
+          return h(
+            "div",
+            { style: { color: "red" } },
+            h("div", {}, ["张三", h("p", {}, "李四")])
+          );
+        },
+      };
+      createApp(App, { name: "张三", age: 10 }).mount("#app");
+    </script>
+  </body>
+</html>

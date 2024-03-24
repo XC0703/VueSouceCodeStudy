@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>8.diff.html</title>
+  </head>
+  <body>
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp, h, reactive } = VueRuntimeDom;
+
+      let App = {
+        setup(props, context) {
+          let state = reactive({
+            name: "张三",
+            age: 10,
+          });
+
+          // return {
+          //   state,
+          // };
+
+          return () => {
+            return h(
+              "div",
+              { style: { color: "red" } },
+              h("div", {}, [state.name, h("p", {}, "李四")]) // 正确渲染了state.name，setup函数一个函数返回的形式，这个函数就是render函数，与注释的代码等效
+            );
+          };
+        },
+
+        // render(proxy) {
+        //   return h(
+        //     "div",
+        //     { style: { color: "red" } },
+        //     h("div", {}, [proxy.state.name, h("p", {}, "李四")]) // 正确渲染了proxy.state.name
+        //   );
+        // },
+      };
+      createApp(App, { name: "模版里面的张三，TODO的部分", age: 10 }).mount(
+        // 传入的参数对象还未处理，看Vue3.0\packages\runtime-core\src\component.ts里面的finishComponentSetup函数
+        "#app"
+      );
+    </script> -->
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp, h, reactive } = VueRuntimeDom;
+
+      let App = {
+        setup(props, context) {
+          let state = reactive({
+            flag: false,
+            name: "张三",
+            age: 10,
+          });
+          // 模拟更新（非响应式的，手动更新）
+          const update = () => {
+            state.flag = !state.flag;
+            if (state.flag) state.name = "更新的张三";
+            else state.name = "张三";
+          };
+          return {
+            state,
+            update,
+          };
+        },
+
+        render(proxy) {
+          if (proxy.state.flag) {
+            return h(
+              "div",
+              {
+                style: { color: "red", background: "none" },
+                onClick: proxy.update,
+              },
+              `${proxy.state.name}`
+            );
+          } else {
+            return h(
+              "div",
+              {
+                style: { color: "blue", background: "pink" },
+                onClick: proxy.update,
+              },
+              `${proxy.state.name}`
+            );
+          }
+        },
+      };
+      createApp(App, { name: "模版里面的张三，TODO的部分", age: 10 }).mount(
+        "#app"
+      );
+    </script> -->
+
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp, h, reactive } = VueRuntimeDom;
+
+      let App = {
+        setup(props, context) {
+          let state = reactive({
+            flag: false,
+            name: "张三",
+            age: 10,
+          });
+          // 模拟更新（非响应式的，手动更新）
+          const update = () => {
+            state.flag = !state.flag;
+          };
+          return {
+            state,
+            update,
+          };
+        },
+
+        render(proxy) {
+          if (proxy.state.flag) {
+            return h(
+              "div",
+              {
+                style: { color: "red", background: "none" },
+                onClick: proxy.update,
+              },
+              [h("p", {}, "李四")]
+            );
+          } else {
+            return h(
+              "div",
+              {
+                style: { color: "blue", background: "pink" },
+                onClick: proxy.update,
+              },
+              `${proxy.state.name}`
+            );
+          }
+        },
+      };
+      createApp(App, { name: "模版里面的张三，TODO的部分", age: 10 }).mount(
+        "#app"
+      );
+    </script> -->
+
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp, h, reactive } = VueRuntimeDom;
+
+      let App = {
+        setup(props, context) {
+          let state = reactive({
+            flag: false,
+            name: "张三",
+            age: 10,
+          });
+          // 模拟更新（非响应式的，手动更新）
+          const update = () => {
+            state.flag = !state.flag;
+          };
+          return {
+            state,
+            update,
+          };
+        },
+
+        render(proxy) {
+          if (proxy.state.flag) {
+            return h(
+              "div",
+              {
+                style: { color: "red", background: "none" },
+                onClick: proxy.update,
+              },
+              [h("p", {}, "李四")]
+            );
+          } else {
+            return h(
+              "div",
+              {
+                style: { color: "blue", background: "pink" },
+                onClick: proxy.update,
+              },
+              `${proxy.state.name}`
+            );
+          }
+        },
+      };
+      createApp(App, { name: "模版里面的张三，TODO的部分", age: 10 }).mount(
+        "#app"
+      );
+    </script> -->
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp, h, reactive } = VueRuntimeDom;
+
+      let App = {
+        setup(props, context) {
+          let state = reactive({
+            flag: false,
+            name: "张三",
+            age: 10,
+          });
+          // 模拟更新（非响应式的，手动更新）
+          const update = () => {
+            state.flag = !state.flag;
+          };
+          return {
+            state,
+            update,
+          };
+        },
+
+        render(proxy) {
+          if (proxy.state.flag) {
+            return h(
+              "div",
+              {
+                style: { color: "red", background: "none" },
+                onClick: proxy.update,
+              },
+              [
+                h("p", { key: "A" }, "A"),
+                h("p", { key: "B" }, "B"),
+                h("p", { key: "C" }, "C"),
+                h("p", { key: "D" }, "D"), // diff from start 应该在这里停止（e1和e2还未变，分别为各自的长度），此时i=3
+                h("p", { key: "O" }, "O"),
+                h("p", { key: "P" }, "P"),
+              ]
+            );
+          } else {
+            return h(
+              "div",
+              {
+                style: { color: "blue", background: "pink" },
+                onClick: proxy.update,
+              },
+              [
+                h("p", { key: "A" }, "A"),
+                h("p", { key: "B" }, "B"),
+                h("p", { key: "C" }, "C"),
+                h("p", { key: "E" }, "E"),
+                h("p", { key: "M" }, "M"), // diff from end 应该在这里停止(i不变），此时e1=4，e2=3
+                h("p", { key: "O" }, "O"),
+                h("p", { key: "P" }, "P"),
+              ]
+            );
+          }
+        },
+      };
+      createApp(App, { name: "模版里面的张三，TODO的部分", age: 10 }).mount(
+        "#app"
+      );
+    </script> -->
+
+    <!-- 简单情况 -->
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp, h, reactive } = VueRuntimeDom;
+
+      let App = {
+        setup(props, context) {
+          let state = reactive({
+            flag: false,
+            name: "张三",
+            age: 10,
+          });
+          // 模拟更新（非响应式的，手动更新）
+          const update = () => {
+            state.flag = !state.flag;
+          };
+          return {
+            state,
+            update,
+          };
+        },
+
+        render(proxy) {
+          if (proxy.state.flag) {
+            return h(
+              "div",
+              {
+                style: { color: "red", background: "none" },
+                onClick: proxy.update,
+              },
+              [
+                h("p", { key: "A" }, "A"),
+                h("p", { key: "B" }, "B"),
+                h("p", { key: "C" }, "C"),
+                h("p", { key: "D" }, "D"),
+                h("p", { key: "E" }, "E"),
+                h("p", { key: "F" }, "F"),
+                h("p", { key: "G" }, "G"),
+              ]
+            );
+          } else {
+            return h(
+              "div",
+              {
+                style: { color: "blue", background: "pink" },
+                onClick: proxy.update,
+              },
+              [
+                h("p", { key: "A" }, "A"),
+                h("p", { key: "B" }, "B"),
+                h("p", { key: "C" }, "C"),
+                h("p", { key: "G" }, "G"),
+              ]
+            );
+          }
+        },
+      };
+      createApp(App, { name: "模版里面的张三，TODO的部分", age: 10 }).mount(
+        "#app"
+      );
+    </script> -->
+
+    <!-- 乱序复杂情况 -->
+    <!-- 简单情况 -->
+    <!-- <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp, h, reactive } = VueRuntimeDom;
+
+      let App = {
+        setup(props, context) {
+          let state = reactive({
+            flag: false,
+            name: "张三",
+            age: 10,
+          });
+          // 模拟更新（非响应式的，手动更新）
+          const update = () => {
+            state.flag = !state.flag;
+          };
+          return {
+            state,
+            update,
+          };
+        },
+
+        render(proxy) {
+          if (proxy.state.flag) {
+            return h(
+              "div",
+              {
+                style: { color: "red", background: "none" },
+                onClick: proxy.update,
+              },
+              [
+                h("p", { key: "A" }, "A"),
+                h("p", { key: "B" }, "B"),
+                h("p", { key: "C" }, "C"),
+                h("p", { key: "D" }, "D"),
+                h("p", { key: "E" }, "E"),
+                h("p", { key: "F" }, "F"),
+                h("p", { key: "G" }, "G"),
+              ]
+            );
+          } else {
+            return h(
+              "div",
+              {
+                style: { color: "blue", background: "pink" },
+                onClick: proxy.update,
+              },
+              [
+                h("p", { key: "A" }, "A"),
+                h("p", { key: "B" }, "B"),
+                h("p", { key: "C" }, "C"),
+                h("p", { key: "M" }, "M"),
+                h("p", { key: "F" }, "F"),
+                h("p", { key: "E" }, "E"),
+                h("p", { key: "Q" }, "Q"),
+                h("p", { key: "G" }, "G"),
+              ]
+            );
+          }
+        },
+      };
+      createApp(App, { name: "模版里面的张三，TODO的部分", age: 10 }).mount(
+        "#app"
+      );
+    </script> -->
+
+    <div id="app">111111111111</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp, h, reactive } = VueRuntimeDom;
+
+      let App = {
+        setup(props, context) {
+          let state = reactive({
+            flag: false,
+            name: "张三",
+            age: 10,
+          });
+          // 模拟更新（非响应式的，手动更新）
+          const update = () => {
+            state.flag = !state.flag;
+          };
+          return {
+            state,
+            update,
+          };
+        },
+
+        render(proxy) {
+          if (proxy.state.flag) {
+            return h(
+              "div",
+              {
+                style: { color: "red", background: "none" },
+                onClick: proxy.update,
+              },
+              [
+                h("p", { key: "A" }, "A"),
+                h("p", { key: "B" }, "B"),
+                h("p", { key: "C" }, "C"),
+                h("p", { key: "D" }, "D"),
+                h("p", { key: "l" }, "l"),
+                h("p", { key: "o" }, "o"),
+                h("p", { key: "v" }, "v"),
+                h("p", { key: "e" }, "e"),
+                h("p", { key: "E" }, "E"),
+                h("p", { key: "F" }, "F"),
+                h("p", { key: "G" }, "G"),
+              ]
+            );
+          } else {
+            return h(
+              "div",
+              {
+                style: { color: "blue", background: "pink" },
+                onClick: proxy.update,
+              },
+              [
+                h("p", { key: "A" }, "A"),
+                h("p", { key: "B" }, "B"),
+                h("p", { key: "C" }, "C"),
+                h("p", { key: "M" }, "M"),
+                h("p", { key: "l" }, "l"),
+                h("p", { key: "o" }, "o"),
+                h("p", { key: "v" }, "v"),
+                h("p", { key: "e" }, "e"),
+                h("p", { key: "F" }, "F"),
+                h("p", { key: "E" }, "E"),
+                h("p", { key: "Q" }, "Q"),
+                h("p", { key: "G" }, "G"),
+              ]
+            );
+          }
+        },
+      };
+      createApp(App, { name: "模版里面的张三，TODO的部分", age: 10 }).mount(
+        "#app"
+      );
+    </script>
+  </body>
+</html>

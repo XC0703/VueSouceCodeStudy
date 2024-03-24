@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>10.compiler.html</title>
+  </head>
+  <body>
+    <!-- <script src="../compiler-core/dist/compiler-core.global.js"></script>
+    <script>
+      const { baseCompile } = VueCompilerCore;
+      const template = `<div class="a" v-bind:b="c">parse {{ element }}</div>`;
+      baseCompile(template);
+    </script> -->
+
+    <!-- 用模版来渲染 -->
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <div id="template">
+      <div>
+        <p class="myText">Hello, World！This is my weak-vue！</p>
+        <div>counter: {{ counter.value }}</div>
+        <button @click="fn()">click</button>
+      </div>
+    </div>
+    <script>
+      let { createApp, ref } = VueRuntimeDom;
+      const counter = ref(0);
+      // 生成随机颜色的函数
+      const getRandomColor = () => {
+        const letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      };
+      const fn = () => {
+        const myText = document.getElementsByClassName("myText")[0];
+        myText.style.color = getRandomColor();
+        counter.value++;
+      };
+      let App = {
+        setup() {
+          return {
+            counter,
+          };
+        },
+      };
+      createApp(App, {}).mount("#template");
+    </script>
+
+    <!-- 直接用h函数来渲染 -->
+    <!-- <div id="template"></div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      let { createApp, h, ref } = VueRuntimeDom;
+      const counter = ref(0);
+      // 生成随机颜色的函数
+      const getRandomColor = () => {
+        const letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      };
+      const fn = () => {
+        const myText = document.getElementsByClassName("myText")[0];
+        myText.style.color = getRandomColor();
+        counter.value++;
+      };
+      let App = {
+        render() {
+          return h("div", null, [
+            h("p", { class: "myText" }, ["Hello, World！This is my weak-vue！"]),
+            h("div", null, ["counter: ", `${counter.value}`]),
+            h("button", { onclick: "fn()" }, ["click"]),
+          ]);
+        },
+      };
+      createApp(App, {}).mount("#template");
+    </script> -->
+  </body>
+</html>

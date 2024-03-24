@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>9.lifecycle.html</title>
+  </head>
+  <body></body>
+  <!-- <script>
+    const {
+      createApp,
+      reactive,
+      h,
+      onMounted,
+      onBeforeMount,
+      onUpdated,
+      onBeforeUpdate,
+    } = Vue;
+
+    let app = {
+      // 注意：
+      // 1、setup相当于vue2.x中的beforeCreate和created
+      // 2、vue3.x中的生命周期方法都是在setup中使用的
+      // 3、vue2.x中的生命周期方法中的this指向当前组件实例，而vue3.x中的生命周期方法的this指向window，但vue3提供了一个获取组件实例的api：getCurrentInstance
+
+      // 问题：vue3.x中的生命周期是怎么调用的？
+      // 方法：每一个组件都有一个实例instance，调用过程就是将组件的生命周期与这个组件实例产生关联
+      // 什么时候产生关联？
+      // 在调用setup之前将这个实例暴露到全局instance上，在setup调用之后，内部执行调用生命周期之后使得全局instance赋null，再调用getCurrentInstance获取到当前最新的组件实例并更新挂载到全局
+      setup() {
+        let state = reactive({ count: 0 });
+        onMounted(() => {
+          console.log(this); // window
+          const instance = getCurrentInstance();
+          console.log("mounted");
+        });
+        onBeforeMount(() => {
+          console.log("beforeMount");
+        });
+        onUpdated(() => {
+          console.log("updated");
+        });
+        onBeforeUpdate(() => {
+          console.log("beforeUpdate");
+        });
+        return () => {
+          return h("div", {}, [
+            h("div", {}, state.count),
+            h(
+              "button",
+              {
+                onClick: () => {
+                  state.count++;
+                },
+              },
+              "+"
+            ),
+          ]);
+        };
+      },
+    };
+  </script> -->
+
+  <div id="app">111111111111</div>
+  <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+  <script>
+    let {
+      createApp,
+      reactive,
+      h,
+      onMounted,
+      onBeforeMount,
+      onUpdated,
+      onBeforeUpdate,
+      getCurrentInstance,
+    } = VueRuntimeDom;
+
+    let App = {
+      setup() {
+        let state = reactive({ count: 0 });
+        onMounted(() => {
+          console.log(this); // window
+          console.log("mounted");
+          const instance = getCurrentInstance();
+          console.log("当前组件实例：", instance);
+        });
+        onBeforeMount(() => {
+          console.log("beforeMount");
+        });
+        onUpdated(() => {
+          console.log("updated");
+        });
+        onBeforeUpdate(() => {
+          console.log("beforeUpdate");
+        });
+        const fn = () => {
+          state.count++;
+        };
+        return () => {
+          return h("div", {}, [
+            h("div", {}, state.count),
+            h(
+              "button",
+              {
+                onClick: fn,
+              },
+              "+"
+            ),
+          ]);
+        };
+      },
+    };
+    createApp(App).mount("#app");
+  </script>
+</html>
