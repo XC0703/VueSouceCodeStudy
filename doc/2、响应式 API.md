@@ -8,7 +8,6 @@
 - `shallowReadonly`：第一层是只读
 
 其中 reactive 和 readonly 是两个最常用的 api，实现原理中进行了一个性能优化处理——建立一个数据结构用来存储已经代理的数据对象，防止重复代理。（面试题常考）
-<a name="w2SuW"></a>
 
 ## 2-2 关于 ES6 中的 Proxy 对象
 
@@ -285,9 +284,8 @@ console.log(Reflect.get(obj1, "getName", obj2)); // 输出：'李四'
 </html>
 ```
 
-然后打开该 html 文件，可以看到控制台的输出：<br />![image.png](../md_images/2.1.png)<br />说明该数据已经被代理了。
+然后打开该 html 文件，可以看到控制台的输出：<br />![image.png](../md_images/doc2.1.png)<br />说明该数据已经被代理了。
 
 ---
 
-自此，我们已经了解响应式 api 的基本实现原理，到这里的代码请看分支：[2、响应式 API](https://github.com/XC0703/VueSouceCodeStudy/commit/235980221e85bd0dcfab77a2af076bd216787c35) 。
-<a name="dUf1n"></a>
+自此，我们已经了解响应式 api 的基本实现原理，到这里的代码请看提交记录：[2、响应式 API](https://github.com/XC0703/VueSouceCodeStudy/commit/235980221e85bd0dcfab77a2af076bd216787c35) 。

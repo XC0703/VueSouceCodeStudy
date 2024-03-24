@@ -57,8 +57,6 @@ export function computed(getterOptions) {
 }
 ```
 
-<a name="dRRjt"></a>
-
 ### 6-2-2 实现 computed
 
 此时再去实现我们的 `ComputedRefImpl` 类，需要借助我们前面实现过的 `effect` 方法实现（传入 `fn` 和对应的 `effect` 配置，每个 `fn` 都有自己的 `effect` 高阶函数，可以进行依赖收集与触发更新），传入的 `getterOptions` 也要有自己的 `effect` 高阶属性，用于控制 `getterOptions` 执行与否。
@@ -80,7 +78,7 @@ class ComputedRefImpl {
   // 获取值的时候触发依赖（实现特性1）
   get value() {
     if (this._dirty) {
-      this._value = this.effect(); // 此时里面的方法执行，this._value的值就是getterOptions返回return的结果，因此需要this.effect()返回的结果是就是用户传入的fn执行返回的结果（Vue3\packages\reactivity\src\effect.ts里面改为return fn())
+      this._value = this.effect(); // 此时里面的方法执行，this._value的值就是getterOptions返回return的结果，因此需要this.effect()返回的结果是就是用户传入的fn执行返回的结果（weak-vue\packages\reactivity\src\effect.ts里面改为return fn())
       this._dirty = false; // 这个是为了实现缓存机制，再去获取值的时候，直接返回旧的value即可（实现特性2）
     }
     return this._value;
@@ -155,4 +153,4 @@ effectSet.forEach((effect: any) => {
 
 ---
 
-自此，我们关于 `computed` 的基本实现就结束了，到这里的源码请看分支：[6、computed 计算属性](https://github.com/XC0703/VueSouceCodeStudy/commit/2a10e665a716ac0bb7485f2706f040ea04c9b4c9).
+自此，我们关于 `computed` 的基本实现就结束了，到这里的源码请看提交记录：[6、computed 计算属性](https://github.com/XC0703/VueSouceCodeStudy/commit/2a10e665a716ac0bb7485f2706f040ea04c9b4c9)。

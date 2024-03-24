@@ -75,7 +75,7 @@ export function createRender(renderOptionDom) {
   const mountComponent = (InitialVnode, container) => {
     // 1、先有一个组件的实例对象（即Vue3组件渲染函数render传入的第一个参数proxy，其实proxy参数将组件定义的所有属性合并了，等效于在setup入口函数里面返回一个函数，可以用proxy.来获取属性）
     const instanece = (InitialVnode.component =
-      createComponentInstance(InitialVnode)); // 记得在Vue3.0\packages\runtime-core\src\vnode.ts文件给vnode定义中加上这个属性
+      createComponentInstance(InitialVnode)); // 记得在weak-vue\packages\runtime-core\src\vnode.ts文件给vnode定义中加上这个属性
     // 2、解析数据到这个实例对象中
     setupComponet(instanece);
     // 3、创建一个effect让render函数执行

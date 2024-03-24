@@ -118,8 +118,6 @@ function createRef(rawValue, shallow = false) {
 </script>
 ```
 
-<a name="woMr6"></a>
-
 ### 5-2-2 toRef 实例对象的包装
 
 像前面一样，我们需要将值包装成一个对象，并且可以拿到正确的值。
@@ -173,8 +171,6 @@ export function toRef(target, key) {
   }, 1000);
 </script>
 ```
-
-<a name="tLIi8"></a>
 
 ## 5-3 toRefs
 
@@ -281,4 +277,3 @@ export function toRefs(target) {
 ---
 
 自此，我们关于 `ref`、`toRef` 与 `toRefs` 的基本实现便已经结束了，到这里的源码请看提交记录：[5、ref、toRef 与 toRefs](https://github.com/XC0703/VueSouceCodeStudy/commit/0a0179058cce812bf6f5632385aae75242cfc2e5)。
-<a name="OhwTU"></a>

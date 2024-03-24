@@ -7,7 +7,7 @@
     "build": "node scripts/build.js",
     "dev": "node scripts/dev.js -w"
   },
-  "name": "Vue3.0",
+  "name": "weak-vue",
   "version": "1.0.0",
   "type": "module",
   "main": "index.js",

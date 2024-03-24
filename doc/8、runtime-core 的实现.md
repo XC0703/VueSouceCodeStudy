@@ -236,4 +236,6 @@ console.log(vnode);
 
 创建一个组件核心方法是 `createApp` 方法（用于创建一个渲染的容器），即一个具有挂载方法的对象，其中挂载的过程可以简化为：**组件==>vnode（本次重点）==>render**。可以根据这个主线对上面的内容重新过一遍。
 
+---
+
 自此，我们关于 `runtime-core` 的讲解基本结束。到此处的源码请看提交记录：[8、runtime-core 的实现](https://github.com/XC0703/VueSouceCodeStudy/commit/befca8c57a0eb76542f5c6ea1e1a91da8480c36a)。

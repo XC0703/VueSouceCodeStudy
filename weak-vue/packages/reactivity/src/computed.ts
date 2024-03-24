@@ -37,7 +37,7 @@ class ComputedRefImpl {
   // 获取值的时候触发依赖（实现特性1）
   get value() {
     if (this._dirty) {
-      this._value = this.effect(); // 此时里面的方法执行，this._value的值就是getterOptions返回return的结果，因此需要this.effect()返回的结果是就是用户传入的fn执行返回的结果（Vue3.0\packages\reactivity\src\effect.ts里面改为return fn())
+      this._value = this.effect(); // 此时里面的方法执行，this._value的值就是getterOptions返回return的结果，因此需要this.effect()返回的结果是就是用户传入的fn执行返回的结果（weak-vue\packages\reactivity\src\effect.ts里面改为return fn())
       this._dirty = false; // 这个是为了实现缓存机制，再去获取值的时候，直接返回旧的value即可（实现特性2）
     }
     return this._value;

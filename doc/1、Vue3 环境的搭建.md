@@ -295,8 +295,6 @@ build("reactivity");
 
 ---
 
-<a name="AYh40"></a>
-
 ## 1-4 解决 ts 模块引入问题
 
 此时我们若想在子包中引入其他包中导出的东西，可以看到会像下面一样报错：<br />![image.png](../md_images/doc1.3.png)<br />原因是 TS 导致的模块引入错误。<br />而提示也给了我们解决办法提示，在 `weak-vue\tsconfig.json` 增加如下配置即可：
